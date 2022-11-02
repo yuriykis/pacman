@@ -11,6 +11,7 @@ import (
 type userInterface struct {
 	window fyne.Window
 	grid   *fyne.Container
+	game   *Game
 }
 
 func newUI(window fyne.Window) *userInterface {
@@ -24,30 +25,19 @@ func (ui *userInterface) createGrid() *fyne.Container {
 	for y := 0; y < RESOLUTION; y++ {
 		for x := 0; x < RESOLUTION; x++ {
 			bg := canvas.NewRectangle(color.Gray{0x30})
-			var isUser bool
-			if y == 0 && x == 0 {
-				isUser = true
-			} else {
-				isUser = false
-			}
-			img := canvas.NewImageFromResource(resourceForCharacter(isUser))
+			img := canvas.NewImageFromResource(nil)
 			img.FillMode = canvas.ImageFillContain
 			grid.Add(container.NewMax(bg, img))
+			ui.game.createPosition(x, y)
 		}
 	}
 	return grid
 }
 
-func (ui *userInterface) refreshGrid(grid *fyne.Container, i int, j int) {
-	for it, cell := range grid.Objects {
-		var isUser bool
-		if it == ((i * RESOLUTION) + j) {
-			isUser = true
-		} else {
-			isUser = false
-		}
+func (ui *userInterface) refreshGrid(grid *fyne.Container) {
+	for _, cell := range grid.Objects {
 		img := cell.(*fyne.Container).Objects[1].(*canvas.Image)
-		img.Resource = resourceForCharacter(isUser)
+		img.Resource = resourceForCharacter(true)
 		img.Refresh()
 	}
 }
