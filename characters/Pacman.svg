@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   sodipodi:docname="Pacman.svg"
+   viewBox="0 0 116.89128 126.35297"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   width="116.89128"
+   height="126.35297">
+  <defs
+     id="defs4">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4176">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop4178" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="stop4180" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4166">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4168" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop4170" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3798">
+      <stop
+         offset="0"
+         style="stop-color:#ffe680"
+         id="stop4158" />
+      <stop
+         offset=".51835"
+         style="stop-color:#ffcc00"
+         id="stop4160" />
+      <stop
+         offset="1"
+         style="stop-color:#806600"
+         id="stop4162" />
+    </linearGradient>
+    <radialGradient
+       id="radialGradient3853"
+       xlink:href="#linearGradient3798"
+       gradientUnits="userSpaceOnUse"
+       cy="368.75"
+       cx="170"
+       gradientTransform="matrix(0.75390142,0,0,0.75633458,-54.8783,687.74011)"
+       r="139.11"
+       inkscape:collect="always" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4166"
+       id="radialGradient4172"
+       cx="97.94976"
+       cy="959.3772"
+       fx="97.94976"
+       fy="959.3772"
+       r="8.3901997"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(-1.9794639,-1.2658311,1.9797513,-3.0958684,-1608.6096,4050.1608)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4176"
+       id="linearGradient4182"
+       x1="89.661484"
+       y1="951.53137"
+       x2="91.4562"
+       y2="952.77771"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     bordercolor="#666666"
+     inkscape:pageshadow="2"
+     inkscape:window-y="1"
+     pagecolor="#ffffff"
+     inkscape:window-height="855"
+     inkscape:window-maximized="1"
+     inkscape:zoom="2.5073477"
+     inkscape:window-x="0"
+     showgrid="false"
+     borderopacity="1.0"
+     inkscape:current-layer="layer1"
+     inkscape:cx="73.361698"
+     inkscape:cy="98.05379"
+     inkscape:window-width="1440"
+     inkscape:pageopacity="0.0"
+     inkscape:document-units="px"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
+    <inkscape:grid
+       id="grid3017"
+       enabled="true"
+       visible="true"
+       snapvisiblegridlinesonly="true"
+       type="xygrid"
+       empspacing="5"
+       originx="-18.4999"
+       originy="-1.5609007" />
+  </sodipodi:namedview>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     transform="translate(-18.4999,-924.44613)">
+    <g
+       id="g4184">
+      <path
+         id="path3019"
+         style="fill:url(#radialGradient3853);fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         inkscape:connector-curvature="0"
+         d="m 81.6764,924.69613 c -34.753467,0 -62.9265,28.17304 -62.9265,62.9265 0,34.75347 28.173033,62.92647 62.9265,62.92647 22.50252,0 42.24466,-11.8138 53.37006,-29.5754 L 81.6764,987.62263 135.04646,954.27159 C 123.92106,936.50534 104.18311,924.69613 81.6764,924.69613 Z" />
+      <circle
+         id="path3836"
+         style="fill:url(#radialGradient4172);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.60000002;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         cx="94.261703"
+         cy="954.05438"
+         r="8.3901997" />
+      <path
+         sodipodi:nodetypes="czczc"
+         inkscape:connector-curvature="0"
+         id="path4174"
+         d="m 94.741351,948.67602 c 0,0 -4.31965,0.96838 -5.325458,2.59378 -1.005808,1.6254 0.05152,5.5448 0.05152,5.5448 0,0 0.542885,-3.62436 1.427318,-4.98208 0.884432,-1.35772 3.846619,-3.1565 3.846619,-3.1565 z"
+         style="fill:url(#linearGradient4182);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+  </g>
+  <metadata
+     id="metadata19">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title></dc:title>
+        <dc:date>2010-09-29T21:18:06</dc:date>
+        <dc:description>Pac-Man image I created from scratch.</dc:description>
+        <dc:source>https://openclipart.org/detail/87823/pac-man-by-jhnri4</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>jhnri4</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>dots</rdf:li>
+            <rdf:li>game</rdf:li>
+            <rdf:li>pac man</rdf:li>
+            <rdf:li>pacman</rdf:li>
+            <rdf:li>yellow</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

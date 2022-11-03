@@ -4,7 +4,7 @@ type PositionType int8
 
 const (
 	NoPositionType PositionType = iota
-	FreePosition
+	Space
 	Wall
 )
 
@@ -13,8 +13,15 @@ type Position struct {
 	Y      int
 	pType  PositionType
 	isFree bool
+
+	char *Character
 }
 
-func newPosition(x int, y int, pType PositionType, isFree bool) *Position {
-	return &Position{X: x, Y: y, isFree: isFree}
+func newPosition(x int, y int) *Position {
+	return &Position{X: x, Y: y, pType: Space, isFree: true, char: nil}
+}
+
+func (pos *Position) assignCharacterToPosition(char *Character) {
+	pos.char = char
+	pos.isFree = false
 }

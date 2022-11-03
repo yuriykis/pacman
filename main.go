@@ -5,8 +5,8 @@ import (
 	"fyne.io/fyne/v2/app"
 )
 
-const RESOLUTION int = 20
-const CHARACTERS_NUMBER int = 10
+const Resolution int = 20
+const CharactersNumber int = 10
 
 func main() {
 	application := app.New()
@@ -17,10 +17,10 @@ func main() {
 	window.Resize(fyne.NewSize(480, 480))
 
 	// go func() {
-	// 	for i := 0; i < RESOLUTION; i++ {
-	// 		for j := 0; j < RESOLUTION; j++ {
-	// 			ui.refreshGrid(ui.grid, i, j)
-	// 			time.Sleep(time.Millisecond * 550)
+	// 	for i := 0; i < Resolution; i++ {
+	// 		for j := 0; j < Resolution; j++ {
+	// 			//ui.refreshGrid(ui.grid, i, j)
+	// 			//time.Sleep(time.Millisecond * 550)
 	// 		}
 	// 	}
 	// }()

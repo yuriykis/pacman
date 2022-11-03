@@ -8,7 +8,6 @@ import (
 )
 
 type Character struct {
-	pos   *Position
 	img   *canvas.Image
 	cType CharacterType
 }
@@ -17,27 +16,25 @@ type CharacterType int8
 
 const (
 	Player CharacterType = iota
-	EnemyBlue
-	EnemyYellow
-	EnemyRed
+	GhostBlue
+	GhostRed
+	GhostWhite
 )
 
-func (char *Character) Position() *Position {
-	return char.pos
+func newCharacter(img *canvas.Image, cType CharacterType) *Character {
+	return &Character{img: img, cType: cType}
 }
 
-func (char *Character) SetPosition(x int, y int) {
-	char.pos.X = x
-	char.pos.Y = y
-}
-
-func newCharacter(pos *Position, img *canvas.Image, cType CharacterType) *Character {
-	return &Character{pos: pos, img: img, cType: cType}
-}
-
-func resourceForCharacter(isUser bool) fyne.Resource {
-	if isUser {
-		return resourcePacmanIconSvg
+func resourceForCharacter(cType CharacterType) fyne.Resource {
+	switch cType {
+	case Player:
+		return resourcePacmanSvg
+	case GhostBlue:
+		return resourceGhostBlueSvg
+	case GhostRed:
+		return resourceGhostRedSvg
+	case GhostWhite:
+		return resourceGhostWhiteSvg
 	}
 	return nil
 }
