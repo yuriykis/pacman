@@ -42,3 +42,7 @@ func (pos *Position) SetPositionType(pType PositionType) {
 	}
 	pos.pType = pType
 }
+
+func (pos *Position) PositionType() PositionType {
+	return pos.pType
+}

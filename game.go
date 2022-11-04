@@ -9,6 +9,7 @@ import (
 type Game struct {
 	characters []*Character
 	positions  []*Position
+	items      []*Item
 	board      *Board
 }
 
@@ -30,10 +31,9 @@ func (g *Game) createPosition(x int, y int) {
 }
 
 func (g *Game) createGame() {
-	g.createBoard()
 	g.initPlayer()
 	for i := 0; i < CharactersNumber; i++ {
-		cType := rand.Intn(3) + 1
+		cType := rand.Intn(4) + 1
 		pos := g.findFreePosition()
 		char := newCharacter(nil, CharacterType(cType))
 		pos.assignCharacterToPosition(char)

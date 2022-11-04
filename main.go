@@ -25,6 +25,6 @@ func main() {
 	// 	}
 	// }()
 	ui.game.createGame()
-	ui.refreshGrid(ui.grid)
+	ui.refreshGrid()
 	window.ShowAndRun()
 }
