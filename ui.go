@@ -38,10 +38,13 @@ func (ui *userInterface) refreshGrid(grid *fyne.Container) {
 	for _, cell := range grid.Objects {
 		x := cell.(*fyne.Container).Position().X
 		y := cell.(*fyne.Container).Position().Y
-		pos := ui.game.PositionByCoords(int(x), int(y))
+		pos := ui.game.PositionByCoords(x, y)
 		img := cell.(*fyne.Container).Objects[1].(*canvas.Image)
-		cType := pos.char.cType
-		img.Resource = resourceForCharacter(cType)
+		char, err := pos.CharacterFromPosition()
+		if err == nil {
+			cType := char.cType
+			img.Resource = resourceForCharacter(cType)
+		}
 		img.Refresh()
 	}
 }

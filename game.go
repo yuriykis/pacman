@@ -49,9 +49,9 @@ func (g *Game) initPlayer() {
 	g.characters = append(g.characters, char)
 }
 
-func (g *Game) PositionByCoords(x int, y int) *Position {
+func (g *Game) PositionByCoords(x float32, y float32) *Position {
 	for _, p := range g.positions {
-		if p.X == x && p.Y == y {
+		if (int(x)/5) == p.X && (int(y)/5) == p.Y {
 			return p
 		}
 	}

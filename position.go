@@ -1,5 +1,7 @@
 package main
 
+import "errors"
+
 type PositionType int8
 
 const (
@@ -24,4 +26,12 @@ func newPosition(x int, y int) *Position {
 func (pos *Position) assignCharacterToPosition(char *Character) {
 	pos.char = char
 	pos.isFree = false
+}
+
+func (pos *Position) CharacterFromPosition() (*Character, error) {
+	char := pos.char
+	if char == nil {
+		return nil, errors.New("no character on given position")
+	}
+	return char, nil
 }
