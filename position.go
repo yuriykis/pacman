@@ -35,3 +35,10 @@ func (pos *Position) CharacterFromPosition() (*Character, error) {
 	}
 	return char, nil
 }
+
+func (pos *Position) SetPositionType(pType PositionType) {
+	if pType == Wall {
+		pos.isFree = false
+	}
+	pos.pType = pType
+}

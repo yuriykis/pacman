@@ -9,6 +9,7 @@ import (
 type Game struct {
 	characters []*Character
 	positions  []*Position
+	board      *Board
 }
 
 func newGame() *Game {
@@ -29,8 +30,8 @@ func (g *Game) createPosition(x int, y int) {
 }
 
 func (g *Game) createGame() {
+	g.createBoard()
 	g.initPlayer()
-
 	for i := 0; i < CharactersNumber; i++ {
 		cType := rand.Intn(3) + 1
 		pos := g.findFreePosition()
@@ -56,4 +57,18 @@ func (g *Game) PositionByCoords(x float32, y float32) *Position {
 		}
 	}
 	return nil
+}
+
+func (g *Game) createBoard() {
+	g.board = NewBoard()
+	for _, p := range g.positions {
+		if g.board.BoardPositionTypeByPosition(*p) == WallChar {
+			p.SetPositionType(Wall)
+			continue
+		}
+		if g.board.BoardPositionTypeByPosition(*p) == SpaceChar {
+			p.SetPositionType(Space)
+			continue
+		}
+	}
 }
