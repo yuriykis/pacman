@@ -34,19 +34,6 @@ func (ui *userInterface) createGrid() *fyne.Container {
 	return grid
 }
 
-func (ui *userInterface) renderWalls() {
-	for _, cell := range ui.grid.Objects {
-		x := cell.(*fyne.Container).Position().X
-		y := cell.(*fyne.Container).Position().Y
-		pos := ui.game.PositionByCoords(x, y)
-		img := cell.(*fyne.Container).Objects[1].(*canvas.Image)
-		if pos.PositionType() == Wall {
-			img.Resource = resourceForWall()
-		}
-		img.Refresh()
-	}
-}
-
 func (ui *userInterface) refreshGrid() {
 	for _, cell := range ui.grid.Objects {
 		x := cell.(*fyne.Container).Position().X
@@ -58,6 +45,9 @@ func (ui *userInterface) refreshGrid() {
 			cType := char.cType
 			img.Resource = resourceForCharacter(cType)
 		}
+		if pos.PositionType() == Wall {
+			img.Resource = resourceForWall()
+		}
 		img.Refresh()
 	}
 }
@@ -65,6 +55,5 @@ func (ui *userInterface) refreshGrid() {
 func (ui *userInterface) createUI() fyne.CanvasObject {
 	ui.grid = ui.createGrid()
 	ui.game.createBoard()
-	ui.renderWalls()
 	return ui.grid
 }
