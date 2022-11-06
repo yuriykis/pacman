@@ -1,39 +1,52 @@
 package character
 
-import "fyne.io/fyne/v2/canvas"
+import (
+	"pacman/utils"
+
+	"fyne.io/fyne/v2"
+)
 
 type ICharacter interface {
 	Move()
-	SetCharacterImage()
-	CharacterImage()
-	CharacterType() CharacterType
+	InitCharacter()
+	CharacterImage() *fyne.StaticResource
+	CharacterType() utils.CharacterType
 }
 
 type character struct {
-	img *canvas.Image
+	img *fyne.StaticResource
 }
 
-type CharacterType int8
+func (char *character) CharacterImage() *fyne.StaticResource {
+	return char.img
+}
 
-const (
-	TPlayer CharacterType = iota
-	TGhostBlue
-	TGhostRed
-	TGhostWhite
-	TGhostOrange
-)
+// func (char *character) InitCharacter() {
+// 	char.setCharacterImage()
+// }
 
-func NewCharacter(cType CharacterType) ICharacter {
+// func (char *character) CharacterType() utils.CharacterType {
+// 	return utils.TNoCharacterType
+// }
+
+// func (char *character) setCharacterImage() {
+// 	img, ok := utils.ResourceForCharacter(char.CharacterType()).(*fyne.StaticResource)
+// 	if ok {
+// 		char.img = img
+// 	}
+// }
+
+func NewCharacter(cType utils.CharacterType) ICharacter {
 	switch cType {
-	case TPlayer:
+	case utils.TPlayer:
 		return &Player{}
-	case TGhostBlue:
+	case utils.TGhostBlue:
 		return &GhostBlue{}
-	case TGhostOrange:
+	case utils.TGhostOrange:
 		return &GhostOrange{}
-	case TGhostRed:
+	case utils.TGhostRed:
 		return &GhostRed{}
-	case TGhostWhite:
+	case utils.TGhostWhite:
 		return &GhostWhite{}
 	}
 	return nil

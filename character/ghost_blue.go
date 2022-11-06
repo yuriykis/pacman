@@ -1,20 +1,29 @@
 package character
 
+import (
+	"pacman/utils"
+
+	"fyne.io/fyne/v2"
+)
+
 type GhostBlue struct {
 	character
 }
 
-func (ghost *GhostBlue) Move() {
-
+func (char *GhostBlue) CharacterType() utils.CharacterType {
+	return utils.TGhostBlue
 }
 
-func (ghost *GhostBlue) SetCharacterImage() {
+func (char *GhostBlue) Move() {
 }
 
-func (ghost *GhostBlue) CharacterImage() {
-
+func (char *GhostBlue) InitCharacter() {
+	char.setCharacterImage()
 }
 
-func (ghost *GhostBlue) CharacterType() CharacterType {
-	return TGhostBlue
+func (char *GhostBlue) setCharacterImage() {
+	img, ok := utils.ResourceForCharacter(char.CharacterType()).(*fyne.StaticResource)
+	if ok {
+		char.img = img
+	}
 }

@@ -43,8 +43,7 @@ func (ui *userInterface) refreshGrid() {
 		img := cell.(*fyne.Container).Objects[1].(*canvas.Image)
 		char, err := pos.CharacterFromPosition()
 		if err == nil {
-			cType := char.CharacterType()
-			img.Resource = utils.ResourceForCharacter(cType)
+			img.Resource = char.CharacterImage()
 		}
 		if pos.PositionType() == Wall {
 			img.Resource = utils.ResourceForWall()

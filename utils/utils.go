@@ -3,22 +3,20 @@
 package utils
 
 import (
-	"pacman/character"
-
 	"fyne.io/fyne/v2"
 )
 
-func ResourceForCharacter(cType character.CharacterType) fyne.Resource {
+func ResourceForCharacter(cType CharacterType) fyne.Resource {
 	switch cType {
-	case character.TPlayer:
+	case TPlayer:
 		return resourcePacmanSvg
-	case character.TGhostBlue:
+	case TGhostBlue:
 		return resourceGhostBlueSvg
-	case character.TGhostRed:
+	case TGhostRed:
 		return resourceGhostRedSvg
-	case character.TGhostWhite:
+	case TGhostWhite:
 		return resourceGhostWhiteSvg
-	case character.TGhostOrange:
+	case TGhostOrange:
 		return resourceGhostOrangeSvg
 	}
 	return nil

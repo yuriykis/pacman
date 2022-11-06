@@ -2,11 +2,8 @@ package main
 
 import (
 	"math/rand"
-
 	"pacman/character"
 	"pacman/utils"
-
-	"fyne.io/fyne/v2/canvas"
 )
 
 type Game struct {
@@ -36,9 +33,10 @@ func (g *Game) createPosition(x int, y int) {
 func (g *Game) createGame() {
 	g.initPlayer()
 	for i := 0; i < CharactersNumber; i++ {
-		cType := rand.Intn(4) + 1
+		cType := rand.Intn(4) + 2
 		pos := g.findFreePosition()
-		char := character.NewCharacter(character.CharacterType(cType))
+		char := character.NewCharacter(utils.CharacterType(cType))
+		char.InitCharacter()
 		pos.assignCharacterToPosition(char)
 		g.characters = append(g.characters, char)
 	}
@@ -46,9 +44,8 @@ func (g *Game) createGame() {
 
 func (g *Game) initPlayer() {
 	pos := g.findFreePosition()
-	img := canvas.NewImageFromResource(utils.ResourceForCharacter(character.TPlayer))
-	img.FillMode = canvas.ImageFillContain
-	char := character.NewCharacter(character.CharacterType(0))
+	char := character.NewCharacter(utils.TPlayer)
+	char.InitCharacter()
 	pos.assignCharacterToPosition(char)
 	g.characters = append(g.characters, char)
 }
