@@ -1,6 +1,9 @@
 package main
 
-import "errors"
+import (
+	"errors"
+	"pacman/character"
+)
 
 type PositionType int8
 
@@ -16,19 +19,19 @@ type Position struct {
 	pType  PositionType
 	isFree bool
 
-	char *Character
+	char character.ICharacter
 }
 
 func newPosition(x int, y int) *Position {
 	return &Position{X: x, Y: y, pType: Space, isFree: true, char: nil}
 }
 
-func (pos *Position) assignCharacterToPosition(char *Character) {
+func (pos *Position) assignCharacterToPosition(char character.ICharacter) {
 	pos.char = char
 	pos.isFree = false
 }
 
-func (pos *Position) CharacterFromPosition() (*Character, error) {
+func (pos *Position) CharacterFromPosition() (character.ICharacter, error) {
 	char := pos.char
 	if char == nil {
 		return nil, errors.New("no character on given position")

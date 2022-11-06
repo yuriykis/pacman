@@ -1,4 +1,4 @@
-module main.go
+module pacman
 
 go 1.19
 

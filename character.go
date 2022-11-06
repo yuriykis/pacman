@@ -1,24 +1,27 @@
 package main
 
-import (
-	"fyne.io/fyne/v2/canvas"
-)
+// import (
+// 	"fyne.io/fyne/v2/canvas"
+// )
 
-type Character struct {
-	img   *canvas.Image
-	cType CharacterType
-}
+// type Character struct {
+// 	img   *canvas.Image
+// 	cType CharacterType
+// }
 
-type CharacterType int8
+// type CharacterType int8
 
-const (
-	Player CharacterType = iota
-	GhostBlue
-	GhostRed
-	GhostWhite
-	GhostOrange
-)
+// const (
+// 	Player CharacterType = iota
+// 	GhostBlue
+// 	GhostRed
+// 	GhostWhite
+// 	GhostOrange
+// )
 
-func newCharacter(img *canvas.Image, cType CharacterType) *Character {
-	return &Character{img: img, cType: cType}
-}
+// func (c *Character) Move() {
+// }
+
+// func newCharacter(img *canvas.Image, cType CharacterType) *Character {
+// 	return &Character{img: img, cType: cType}
+// }
