@@ -18,10 +18,14 @@ func newGame() *Game {
 }
 
 func (g *Game) findFreePosition() *Position {
+	var freePositions []*Position
 	for _, p := range g.positions {
 		if p.isFree {
-			return p
+			freePositions = append(freePositions, p)
 		}
+	}
+	if len(freePositions) != 0 {
+		return freePositions[rand.Intn(len(freePositions)+1)]
 	}
 	return nil
 }
