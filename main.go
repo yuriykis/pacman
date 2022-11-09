@@ -6,7 +6,7 @@ import (
 )
 
 const Resolution int = 20
-const CharactersNumber int = 50
+const CharactersNumber int = 20
 
 func main() {
 	application := app.New()
