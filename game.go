@@ -25,7 +25,7 @@ func (g *Game) findFreePosition() *Position {
 		}
 	}
 	if len(freePositions) != 0 {
-		return freePositions[rand.Intn(len(freePositions)+1)]
+		return freePositions[rand.Intn(len(freePositions))]
 	}
 	return nil
 }
