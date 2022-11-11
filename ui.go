@@ -2,6 +2,7 @@ package main
 
 import (
 	"image/color"
+	"pacman/board"
 	"pacman/utils"
 
 	"fyne.io/fyne/v2"
@@ -41,11 +42,11 @@ func (ui *userInterface) refreshGrid() {
 		y := cell.(*fyne.Container).Position().Y
 		pos := ui.game.PositionByCoords(x, y)
 		img := cell.(*fyne.Container).Objects[1].(*canvas.Image)
-		char, err := pos.CharacterFromPosition()
+		char, err := ui.game.CharacterByPosition(pos)
 		if err == nil {
 			img.Resource = char.CharacterImage()
 		}
-		if pos.PositionType() == Wall {
+		if pos.PositionType() == board.Wall {
 			img.Resource = utils.ResourceForWall()
 		}
 		img.Refresh()

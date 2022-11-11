@@ -1,6 +1,7 @@
 package character
 
 import (
+	"pacman/board"
 	"pacman/utils"
 
 	"fyne.io/fyne/v2"
@@ -8,22 +9,26 @@ import (
 
 type ICharacter interface {
 	Move()
-	InitCharacter()
+	InitCharacter(pos *board.Position)
 	CharacterImage() *fyne.StaticResource
 	CharacterType() utils.CharacterType
+	Position() *board.Position
+	SetCharacterPosition(pos *board.Position)
 }
 
 type character struct {
 	img   *fyne.StaticResource
 	cType utils.CharacterType
+	pos   *board.Position
 }
 
 func (char *character) CharacterImage() *fyne.StaticResource {
 	return char.img
 }
 
-func (char *character) InitCharacter() {
+func (char *character) InitCharacter(pos *board.Position) {
 	char.setCharacterImage()
+	char.SetCharacterPosition(pos)
 }
 
 func (char *character) CharacterType() utils.CharacterType {
@@ -35,6 +40,14 @@ func (char *character) setCharacterImage() {
 	if ok {
 		char.img = img
 	}
+}
+
+func (char *character) SetCharacterPosition(pos *board.Position) {
+	char.pos = pos
+}
+
+func (char *character) Position() *board.Position {
+	return char.pos
 }
 
 func NewCharacter(cType utils.CharacterType) ICharacter {
