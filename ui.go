@@ -22,10 +22,10 @@ func newUI(window fyne.Window) *userInterface {
 }
 
 func (ui *userInterface) createGrid() *fyne.Container {
-	grid := container.NewGridWithColumns(Resolution)
+	grid := container.NewGridWithColumns(BoardSize)
 
-	for y := 0; y < Resolution; y++ {
-		for x := 0; x < Resolution; x++ {
+	for y := 0; y < BoardSize; y++ {
+		for x := 0; x < BoardSize; x++ {
 			bg := canvas.NewRectangle(color.Gray{0x30})
 			img := canvas.NewImageFromResource(nil)
 			img.FillMode = canvas.ImageFillContain
@@ -40,11 +40,13 @@ func (ui *userInterface) refreshGrid() {
 	for _, cell := range ui.grid.Objects {
 		x := cell.(*fyne.Container).Position().X
 		y := cell.(*fyne.Container).Position().Y
-		pos := ui.game.PositionByCoords(x, y)
+		pos := ui.game.PositionByBoardCoords(x, y)
 		img := cell.(*fyne.Container).Objects[1].(*canvas.Image)
 		char, err := ui.game.CharacterByPosition(pos)
 		if err == nil {
 			img.Resource = char.CharacterImage()
+		} else {
+			img.Resource = nil
 		}
 		if pos.PositionType() == board.Wall {
 			img.Resource = utils.ResourceForWall()

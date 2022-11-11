@@ -2,13 +2,14 @@ package character
 
 import (
 	"pacman/board"
+	"pacman/move"
 	"pacman/utils"
 
 	"fyne.io/fyne/v2"
 )
 
 type ICharacter interface {
-	Move()
+	Move() move.Direction
 	InitCharacter(pos *board.Position)
 	CharacterImage() *fyne.StaticResource
 	CharacterType() utils.CharacterType
