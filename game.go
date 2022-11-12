@@ -7,6 +7,8 @@ import (
 	"pacman/character"
 	"pacman/move"
 	"pacman/utils"
+
+	"fyne.io/fyne/v2"
 )
 
 type Game struct {
@@ -33,8 +35,8 @@ func (g *Game) findFreePosition() *board.Position {
 	return nil
 }
 
-func (g *Game) createPosition(x int, y int) {
-	pos := board.NewPosition(x, y)
+func (g *Game) createPosition(x int, y int, cell fyne.CanvasObject) {
+	pos := board.NewPosition(x, y, cell)
 	g.positions = append(g.positions, pos)
 }
 
@@ -54,16 +56,6 @@ func (g *Game) initPlayer() {
 	char := character.NewCharacter(utils.TPlayer)
 	char.InitCharacter(pos)
 	g.characters = append(g.characters, char)
-}
-
-func (g *Game) PositionByBoardCoords(x float32, y float32) *board.Position {
-	var coef int = int(WindowResolution) / BoardSize
-	for _, p := range g.positions {
-		if (int(x)/coef) == p.X && (int(y)/coef) == p.Y {
-			return p
-		}
-	}
-	return nil
 }
 
 func (g *Game) findPosition(x int, y int) *board.Position {

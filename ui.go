@@ -29,18 +29,17 @@ func (ui *userInterface) createGrid() *fyne.Container {
 			bg := canvas.NewRectangle(color.Gray{0x30})
 			img := canvas.NewImageFromResource(nil)
 			img.FillMode = canvas.ImageFillContain
-			grid.Add(container.NewMax(bg, img))
-			ui.game.createPosition(x, y)
+			cell := container.NewMax(bg, img)
+			grid.Add(cell)
+			ui.game.createPosition(x, y, cell)
 		}
 	}
 	return grid
 }
 
 func (ui *userInterface) refreshGrid() {
-	for _, cell := range ui.grid.Objects {
-		x := cell.(*fyne.Container).Position().X
-		y := cell.(*fyne.Container).Position().Y
-		pos := ui.game.PositionByBoardCoords(x, y)
+	for _, pos := range ui.game.positions {
+		cell := pos.Cell()
 		img := cell.(*fyne.Container).Objects[1].(*canvas.Image)
 		char, err := ui.game.CharacterByPosition(pos)
 		if err == nil {
