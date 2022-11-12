@@ -7,9 +7,11 @@ import (
 	"fyne.io/fyne/v2/app"
 )
 
-const BoardSize int = 20
-const CharactersNumber int = 20
-const WindowResolution float32 = 480
+const (
+	BoardSize        int     = 20
+	CharactersNumber int     = 20
+	WindowResolution float32 = 480
+)
 
 func main() {
 	application := app.New()
@@ -23,8 +25,8 @@ func main() {
 
 	go func() {
 		for {
-			ui.game.startGame()
 			ui.refreshGrid()
+			ui.game.startGame()
 			time.Sleep(500 * time.Millisecond)
 		}
 	}()
