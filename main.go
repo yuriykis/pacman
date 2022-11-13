@@ -22,14 +22,17 @@ func main() {
 	window.SetContent(ui.createUI())
 
 	ui.game.createGame()
-
 	go func() {
 		for {
 			ui.refreshGrid()
-			ui.game.startGame()
-			time.Sleep(500 * time.Millisecond)
+			time.Sleep(100 * time.Millisecond)
 		}
 	}()
+	ui.game.startGame()
+
+	window.Canvas().SetOnTypedKey(func(k *fyne.KeyEvent) {
+		ui.game.engine.player.MapKeyCodeToDirection(*k)
+	})
 
 	window.ShowAndRun()
 }

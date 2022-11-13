@@ -10,5 +10,5 @@ type GhostBlue struct {
 }
 
 func (char *GhostBlue) Move() move.Direction {
-	return move.Direction(rand.Intn(4))
+	return move.Direction(rand.Intn(4) + 1)
 }

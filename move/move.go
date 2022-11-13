@@ -3,7 +3,8 @@ package move
 type Direction int8
 
 const (
-	Up Direction = iota
+	NoDirection Direction = iota
+	Up
 	Down
 	Right
 	Left

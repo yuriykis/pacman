@@ -7,6 +7,7 @@ import (
 	"pacman/character"
 	"pacman/move"
 	"pacman/utils"
+	"time"
 
 	"fyne.io/fyne/v2"
 )
@@ -16,10 +17,11 @@ type Game struct {
 	positions  []*board.Position
 	items      []*Item
 	board      *board.Board
+	engine     *Engine
 }
 
 func newGame() *Game {
-	return &Game{}
+	return &Game{engine: NewEngine()}
 }
 
 func (g *Game) findFreePosition() *board.Position {
@@ -55,7 +57,7 @@ func (g *Game) initPlayer() {
 	pos := g.findFreePosition()
 	char := character.NewCharacter(utils.TPlayer)
 	char.InitCharacter(pos)
-	g.characters = append(g.characters, char)
+	g.engine.player = char.(*character.Player)
 }
 
 func (g *Game) findPosition(x int, y int) *board.Position {
@@ -82,6 +84,9 @@ func (g *Game) createBoard() {
 }
 
 func (g *Game) CharacterByPosition(pos *board.Position) (character.ICharacter, error) {
+	if g.engine.player.Position() == pos {
+		return g.engine.player, nil
+	}
 	for _, c := range g.characters {
 		if c.Position().X == pos.X && c.Position().Y == pos.Y {
 			return c, nil
@@ -92,8 +97,25 @@ func (g *Game) CharacterByPosition(pos *board.Position) (character.ICharacter, e
 
 func (g *Game) startGame() {
 	for _, c := range g.characters {
+		go g.startMoving(c)
+	}
+	go g.movePlayer()
+	go g.engine.Run()
+}
+
+func (g *Game) startMoving(c character.ICharacter) {
+	for {
 		direction := c.Move()
 		g.moveCharacter(c, direction)
+		time.Sleep(500 * time.Millisecond)
+	}
+}
+
+func (g *Game) movePlayer() {
+	for {
+		direction := g.engine.player.Move()
+		g.moveCharacter(g.engine.player, direction)
+		time.Sleep(500 * time.Millisecond)
 	}
 }
 
@@ -109,6 +131,8 @@ func (g *Game) moveCharacter(c character.ICharacter, direction move.Direction) {
 		newPos = g.findPosition(pos.X-1, pos.Y)
 	case move.Right:
 		newPos = g.findPosition(pos.X+1, pos.Y)
+	case move.NoDirection:
+		return
 	}
 	if newPos.IsFree() {
 		c.SetCharacterPosition(newPos)
