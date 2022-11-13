@@ -100,7 +100,6 @@ func (g *Game) startGame() {
 		go g.startMoving(c)
 	}
 	go g.movePlayer()
-	go g.engine.Run()
 }
 
 func (g *Game) startMoving(c character.ICharacter) {
