@@ -22,7 +22,7 @@ func newUI(window fyne.Window) *userInterface {
 }
 
 func (ui *userInterface) createGrid() *fyne.Container {
-	grid := container.NewGridWithColumns(BoardSize)
+	cells := make([]fyne.CanvasObject, 0)
 
 	for y := 0; y < BoardSize; y++ {
 		for x := 0; x < BoardSize; x++ {
@@ -30,11 +30,11 @@ func (ui *userInterface) createGrid() *fyne.Container {
 			img := canvas.NewImageFromResource(nil)
 			img.FillMode = canvas.ImageFillContain
 			cell := container.NewMax(bg, img)
-			grid.Add(cell)
+			cells = append(cells, cell)
 			ui.game.createPosition(x, y, cell)
 		}
 	}
-	return grid
+	return container.New(&boardLayout{}, cells...)
 }
 
 func (ui *userInterface) refreshGrid() {
