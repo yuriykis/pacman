@@ -1,6 +1,10 @@
 package board
 
-import "fyne.io/fyne/v2"
+import (
+	"sync"
+
+	"fyne.io/fyne/v2"
+)
 
 type PositionType int8
 
@@ -16,6 +20,7 @@ type Position struct {
 	pType  PositionType
 	isFree bool
 	cell   fyne.CanvasObject
+	mu     sync.Mutex
 }
 
 func NewPosition(x int, y int, cell fyne.CanvasObject) *Position {
@@ -47,4 +52,12 @@ func (pos *Position) SetCell(cell fyne.CanvasObject) {
 
 func (pos *Position) Cell() fyne.CanvasObject {
 	return pos.cell
+}
+
+func (pos *Position) Lock() {
+	pos.mu.Lock()
+}
+
+func (pos *Position) Unlock() {
+	pos.mu.Unlock()
 }

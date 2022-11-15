@@ -106,7 +106,7 @@ func (g *Game) startMoving(c character.ICharacter) {
 	for {
 		direction := c.Move()
 		g.moveCharacter(c, direction)
-		time.Sleep(500 * time.Millisecond)
+		time.Sleep(time.Duration(GameSpeed) * time.Millisecond)
 	}
 }
 
@@ -114,7 +114,7 @@ func (g *Game) movePlayer() {
 	for {
 		direction := g.engine.player.Move()
 		g.moveCharacter(g.engine.player, direction)
-		time.Sleep(500 * time.Millisecond)
+		time.Sleep(time.Duration(GameSpeed) * time.Millisecond)
 	}
 }
 
@@ -133,10 +133,12 @@ func (g *Game) moveCharacter(c character.ICharacter, direction move.Direction) {
 	case move.NoDirection:
 		return
 	}
+	newPos.Lock()
 	if newPos.IsFree() {
 		c.SetCharacterPosition(newPos)
 		pos.SetPositionType(board.Space)
 		pos.SetFree(true)
 		newPos.SetFree(false)
 	}
+	newPos.Unlock()
 }
