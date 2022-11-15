@@ -31,14 +31,14 @@ func (ui *userInterface) createGrid() *fyne.Container {
 			img.FillMode = canvas.ImageFillContain
 			cell := container.NewMax(bg, img)
 			cells = append(cells, cell)
-			ui.game.createPosition(x, y, cell)
+			ui.game.board.CreatePosition(x, y, cell)
 		}
 	}
 	return container.New(&boardLayout{}, cells...)
 }
 
 func (ui *userInterface) refreshGrid() {
-	for _, pos := range ui.game.positions {
+	for _, pos := range ui.game.board.Positions() {
 		cell := pos.Cell()
 		img := cell.(*fyne.Container).Objects[1].(*canvas.Image)
 		char, err := ui.game.CharacterByPosition(pos)
@@ -55,7 +55,8 @@ func (ui *userInterface) refreshGrid() {
 }
 
 func (ui *userInterface) createUI() fyne.CanvasObject {
-	ui.grid = ui.createGrid()
 	ui.game.createBoard()
+	ui.grid = ui.createGrid()
+	ui.game.board.SetPositionTypes()
 	return ui.grid
 }
