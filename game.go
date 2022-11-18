@@ -5,13 +5,14 @@ import (
 	"math/rand"
 	"pacman/board"
 	"pacman/character"
+	"pacman/item"
 	"pacman/utils"
 	"time"
 )
 
 type Game struct {
 	characters []character.ICharacter
-	items      []*Item
+	items      []item.IItem
 	engine     *Engine
 }
 

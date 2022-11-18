@@ -9,7 +9,7 @@ import (
 
 const (
 	BoardSize        int     = 20
-	CharactersNumber int     = 10
+	CharactersNumber int     = 5
 	WindowResolution float32 = 480
 	GameSpeed        int     = 200
 )
