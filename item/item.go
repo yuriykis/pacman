@@ -4,26 +4,43 @@ import (
 	"pacman/board"
 	"pacman/utils"
 
-	"fyne.io/fyne/v2/canvas"
+	"fyne.io/fyne/v2"
 )
 
 type IItem interface {
-	ItemImage() *canvas.Image
+	ItemImage() *fyne.StaticResource
 	ItemType() utils.ItemType
+	InitItem(pos *board.Position)
 }
 
 type item struct {
-	img   *canvas.Image
+	img   *fyne.StaticResource
 	iType utils.ItemType
 	pos   *board.Position
 }
 
-func (i *item) ItemImage() *canvas.Image {
+func (i *item) ItemImage() *fyne.StaticResource {
 	return i.img
 }
 
 func (i *item) ItemType() utils.ItemType {
 	return i.iType
+}
+
+func (i *item) InitItem(pos *board.Position) {
+	i.setItemImage()
+	i.SetItemPosition(pos)
+}
+
+func (i *item) setItemImage() {
+	img, ok := utils.ResourceForItem(i.ItemType()).(*fyne.StaticResource)
+	if ok {
+		i.img = img
+	}
+}
+
+func (i *item) SetItemPosition(pos *board.Position) {
+	i.pos = pos
 }
 
 func NewItem(iType utils.ItemType) IItem {

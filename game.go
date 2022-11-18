@@ -22,12 +22,27 @@ func newGame() *Game {
 
 func (g *Game) createGame() {
 	g.initPlayer()
+	g.generateCharacters()
+	g.generateItems()
+}
+
+func (g *Game) generateCharacters() {
 	for i := 0; i < CharactersNumber; i++ {
 		cType := rand.Intn(4) + 2
 		pos := g.engine.board.FindFreePosition()
 		char := character.NewCharacter(utils.CharacterType(cType))
 		char.InitCharacter(pos)
 		g.characters = append(g.characters, char)
+	}
+}
+
+func (g *Game) generateItems() {
+	for i := 0; i < ItemsNumber; i++ {
+		iType := rand.Intn(1) + 1
+		pos := g.engine.board.FindFreePosition()
+		it := item.NewItem(utils.ItemType(iType))
+		it.InitItem(pos)
+		g.items = append(g.items, it)
 	}
 }
 

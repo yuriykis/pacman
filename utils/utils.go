@@ -25,3 +25,11 @@ func ResourceForCharacter(cType CharacterType) fyne.Resource {
 func ResourceForWall() fyne.Resource {
 	return resourceWallSvg
 }
+
+func ResourceForItem(iType ItemType) fyne.Resource {
+	switch iType {
+	case TCoin:
+		return resourceCoinSvg
+	}
+	return nil
+}

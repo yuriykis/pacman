@@ -12,6 +12,7 @@ const (
 	CharactersNumber int     = 5
 	WindowResolution float32 = 480
 	GameSpeed        int     = 200
+	ItemsNumber      int     = 10
 )
 
 func main() {
