@@ -41,17 +41,24 @@ func (ui *userInterface) refreshGrid() {
 	for _, pos := range ui.game.engine.board.Positions() {
 		cell := pos.Cell()
 		img := cell.(*fyne.Container).Objects[1].(*canvas.Image)
-		char, err := ui.game.CharacterByPosition(pos)
-		if err == nil {
-			img.Resource = char.CharacterImage()
-		} else {
-			img.Resource = nil
-		}
+		img.Resource = ui.positionImage(pos)
 		if pos.PositionType() == board.Wall {
 			img.Resource = utils.ResourceForWall()
 		}
 		img.Refresh()
 	}
+}
+
+func (ui *userInterface) positionImage(pos *board.Position) *fyne.StaticResource {
+	char, err := ui.game.CharacterByPosition(pos)
+	if err == nil {
+		return char.CharacterImage()
+	}
+	item, err := ui.game.ItemByPosition(pos)
+	if err == nil {
+		return item.ItemImage()
+	}
+	return nil
 }
 
 func (ui *userInterface) createUI() fyne.CanvasObject {

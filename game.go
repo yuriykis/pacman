@@ -69,6 +69,15 @@ func (g *Game) CharacterByPosition(pos *board.Position) (character.ICharacter, e
 	return nil, errors.New("no character on given position")
 }
 
+func (g *Game) ItemByPosition(pos *board.Position) (item.IItem, error) {
+	for _, i := range g.items {
+		if i.Position().X == pos.X && i.Position().Y == pos.Y {
+			return i, nil
+		}
+	}
+	return nil, errors.New("no item on given position")
+}
+
 func (g *Game) startGame() {
 	for _, c := range g.characters {
 		go g.startMoving(c)

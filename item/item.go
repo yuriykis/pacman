@@ -11,6 +11,7 @@ type IItem interface {
 	ItemImage() *fyne.StaticResource
 	ItemType() utils.ItemType
 	InitItem(pos *board.Position)
+	Position() *board.Position
 }
 
 type item struct {
@@ -41,6 +42,10 @@ func (i *item) setItemImage() {
 
 func (i *item) SetItemPosition(pos *board.Position) {
 	i.pos = pos
+}
+
+func (i *item) Position() *board.Position {
+	return i.pos
 }
 
 func NewItem(iType utils.ItemType) IItem {
