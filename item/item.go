@@ -42,6 +42,7 @@ func (i *item) setItemImage() {
 
 func (i *item) SetItemPosition(pos *board.Position) {
 	i.pos = pos
+	i.pos.SetFree(false)
 }
 
 func (i *item) Position() *board.Position {

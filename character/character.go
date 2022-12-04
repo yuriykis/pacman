@@ -45,6 +45,7 @@ func (char *character) setCharacterImage() {
 
 func (char *character) SetCharacterPosition(pos *board.Position) {
 	char.pos = pos
+	char.pos.SetFree(false)
 }
 
 func (char *character) Position() *board.Position {
