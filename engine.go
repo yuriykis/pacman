@@ -1,20 +1,46 @@
 package main
 
 import (
+	"errors"
 	"pacman/board"
-	"pacman/character"
+	"pacman/character/animated"
+	"pacman/character/inanimate"
+	"pacman/character/types"
 	"pacman/move"
 	"time"
 )
 
 type Engine struct {
-	player *character.Player
-	board  *board.Board
+	items      []inanimate.IInanimate
+	characters []animated.IAnimated
+	player     *animated.Player
+	board      *board.Board
 }
 
 func NewEngine() *Engine {
 	return &Engine{}
 }
+
+func (e *Engine) CharacterByPosition(pos *board.Position) (animated.IAnimated, error) {
+	if e.player.Position() == pos {
+		return e.player, nil
+	}
+	for _, c := range e.characters {
+		if c.Position().X == pos.X && c.Position().Y == pos.Y {
+			return c, nil
+		}
+	}
+	return nil, errors.New("no character on given position")
+}
+
+// func (e *Engine) ItemByPosition(pos *board.Position) (item.IItem, error) {
+// 	for _, i := range e.items {
+// 		if i.Position().X == pos.X && i.Position().Y == pos.Y {
+// 			return i, nil
+// 		}
+// 	}
+// 	return nil, errors.New("no item on given position")
+// }
 
 func (e *Engine) MovePlayer() {
 	for {
@@ -24,7 +50,7 @@ func (e *Engine) MovePlayer() {
 	}
 }
 
-func (e *Engine) MoveCharacter(c character.ICharacter, direction move.Direction) {
+func (e *Engine) MoveCharacter(c animated.IAnimated, direction move.Direction) {
 	pos := c.Position()
 	var newPos *board.Position
 	switch direction {
@@ -41,10 +67,34 @@ func (e *Engine) MoveCharacter(c character.ICharacter, direction move.Direction)
 	}
 	newPos.Lock()
 	if newPos.IsFree() {
-		c.SetCharacterPosition(newPos)
-		pos.SetPositionType(board.Space)
-		pos.SetFree(true)
-		newPos.SetFree(false)
+		e.moveToNewPosision(c, pos, newPos)
+	} else {
+		e.colision(c, newPos)
 	}
 	newPos.Unlock()
+}
+
+func (e *Engine) moveToNewPosision(c animated.IAnimated, pos *board.Position, newPos *board.Position) {
+	c.SetCharacterPosition(newPos)
+	pos.SetPositionType(board.Space)
+	pos.SetFree(true)
+	newPos.SetFree(false)
+}
+
+func (e *Engine) colision(myChar animated.IAnimated, newPos *board.Position) {
+	if newPos.PositionType() == board.Wall {
+		return
+	}
+	if myChar.CharacterType() == types.TPlayer {
+		// colisionCharacter, err := e.CharacterByPosition(newPos)
+		// if err != nil {
+		// 	return
+		// }
+		// if colisionCharacter.AnimatedType() == utils.TCoin {
+		// 	//	e.player.AddScore(10)
+		// 	//			e.removeCharacter(colisionCharacter)
+		// 	return
+		// }
+		return
+	}
 }

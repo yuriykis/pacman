@@ -50,14 +50,14 @@ func (ui *userInterface) RefreshGrid() {
 }
 
 func (ui *userInterface) positionImage(pos *board.Position) fyne.Resource {
-	char, err := ui.game.CharacterByPosition(pos)
+	char, err := ui.game.engine.CharacterByPosition(pos)
 	if err == nil {
 		return char.CharacterImage()
 	}
-	item, err := ui.game.ItemByPosition(pos)
-	if err == nil {
-		return item.ItemImage()
-	}
+	// item, err := ui.game.engine.ItemByPosition(pos)
+	// if err == nil {
+	// 	return item.ItemImage()
+	// }
 	return nil
 }
 

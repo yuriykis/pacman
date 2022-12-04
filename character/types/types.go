@@ -1,12 +1,13 @@
-package utils
+package types
 
 type CharacterType int8
 
 const (
-	TNoCharacterType CharacterType = iota
+	TNoAnimatedType CharacterType = iota
 	TPlayer
 	TGhostBlue
 	TGhostRed
 	TGhostWhite
 	TGhostOrange
+	TCoin
 )

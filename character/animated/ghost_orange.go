@@ -1,4 +1,4 @@
-package character
+package animated
 
 import (
 	"math/rand"
@@ -6,7 +6,7 @@ import (
 )
 
 type GhostOrange struct {
-	character
+	animated
 }
 
 func (char *GhostOrange) Move() move.Direction {
