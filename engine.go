@@ -59,7 +59,7 @@ func (e *Engine) MoveCharacter(c animated.IAnimated, direction move.Direction) {
 	if newPos.IsFree() {
 		e.moveToNewPosision(c, pos, newPos)
 	} else {
-		e.colision(c, newPos)
+		e.colision(c, pos, newPos)
 	}
 	newPos.Unlock()
 }
@@ -71,20 +71,30 @@ func (e *Engine) moveToNewPosision(c animated.IAnimated, pos *board.Position, ne
 	newPos.SetFree(false)
 }
 
-func (e *Engine) colision(myChar animated.IAnimated, newPos *board.Position) {
+func (e *Engine) removeCharacter(c base.ICharacter) {
+	for i, ch := range e.characters {
+		if ch == c {
+			e.characters = append(e.characters[:i], e.characters[i+1:]...)
+			return
+		}
+	}
+}
+
+func (e *Engine) colision(myChar animated.IAnimated, pos *board.Position, newPos *board.Position) {
 	if newPos.PositionType() == board.Wall {
 		return
 	}
 	if myChar.CharacterType() == types.TPlayer {
-		// colisionCharacter, err := e.CharacterByPosition(newPos)
-		// if err != nil {
-		// 	return
-		// }
-		// if colisionCharacter.AnimatedType() == utils.TCoin {
-		// 	//	e.player.AddScore(10)
-		// 	//			e.removeCharacter(colisionCharacter)
-		// 	return
-		// }
+		colisionCharacter, err := e.CharacterByPosition(newPos)
+		if err != nil {
+			return
+		}
+		if colisionCharacter.CharacterType() == types.TCoin {
+			//	e.player.AddScore(10)
+			e.moveToNewPosision(myChar, pos, newPos)
+			e.removeCharacter(colisionCharacter)
+			return
+		}
 		return
 	}
 }
