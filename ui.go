@@ -16,7 +16,7 @@ type userInterface struct {
 	game   *Game
 }
 
-func newUI(window fyne.Window) *userInterface {
+func NewUI(window fyne.Window) *userInterface {
 	ui := &userInterface{window: window}
 	return ui
 }
@@ -37,7 +37,7 @@ func (ui *userInterface) createGrid() *fyne.Container {
 	return container.New(&boardLayout{}, cells...)
 }
 
-func (ui *userInterface) refreshGrid() {
+func (ui *userInterface) RefreshGrid() {
 	for _, pos := range ui.game.engine.board.Positions() {
 		cell := pos.Cell()
 		img := cell.(*fyne.Container).Objects[1].(*canvas.Image)
@@ -61,7 +61,7 @@ func (ui *userInterface) positionImage(pos *board.Position) fyne.Resource {
 	return nil
 }
 
-func (ui *userInterface) createUI() fyne.CanvasObject {
+func (ui *userInterface) CreateUI() fyne.CanvasObject {
 	ui.game.createBoard()
 	ui.grid = ui.createGrid()
 	ui.game.engine.board.SetPositionTypes()

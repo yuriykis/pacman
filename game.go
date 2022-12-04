@@ -16,11 +16,11 @@ type Game struct {
 	engine     *Engine
 }
 
-func newGame() *Game {
+func NewGame() *Game {
 	return &Game{engine: NewEngine()}
 }
 
-func (g *Game) createGame() {
+func (g *Game) CreateGame() {
 	g.initPlayer()
 	g.generateCharacters()
 	g.generateItems()
@@ -78,17 +78,17 @@ func (g *Game) ItemByPosition(pos *board.Position) (item.IItem, error) {
 	return nil, errors.New("no item on given position")
 }
 
-func (g *Game) startGame() {
+func (g *Game) StartGame() {
 	for _, c := range g.characters {
 		go g.startMoving(c)
 	}
-	go g.engine.movePlayer()
+	go g.engine.MovePlayer()
 }
 
 func (g *Game) startMoving(c character.ICharacter) {
 	for {
 		direction := c.Move()
-		g.engine.moveCharacter(c, direction)
+		g.engine.MoveCharacter(c, direction)
 		time.Sleep(time.Duration(GameSpeed) * time.Millisecond)
 	}
 }

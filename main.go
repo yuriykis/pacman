@@ -19,18 +19,18 @@ func main() {
 	application := app.New()
 	window := application.NewWindow("Packman")
 	window.Resize(fyne.NewSize(WindowResolution, WindowResolution))
-	ui := newUI(window)
-	ui.game = newGame()
-	window.SetContent(ui.createUI())
+	ui := NewUI(window)
+	ui.game = NewGame()
+	window.SetContent(ui.CreateUI())
 
-	ui.game.createGame()
+	ui.game.CreateGame()
 	go func() {
 		for {
-			ui.refreshGrid()
+			ui.RefreshGrid()
 			time.Sleep(100 * time.Millisecond)
 		}
 	}()
-	ui.game.startGame()
+	ui.game.StartGame()
 
 	window.Canvas().SetOnTypedKey(func(k *fyne.KeyEvent) {
 		ui.game.engine.player.MapKeyCodeToDirection(*k)

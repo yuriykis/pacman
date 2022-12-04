@@ -16,15 +16,15 @@ func NewEngine() *Engine {
 	return &Engine{}
 }
 
-func (e *Engine) movePlayer() {
+func (e *Engine) MovePlayer() {
 	for {
 		direction := e.player.Move()
-		e.moveCharacter(e.player, direction)
+		e.MoveCharacter(e.player, direction)
 		time.Sleep(time.Duration(GameSpeed) * time.Millisecond)
 	}
 }
 
-func (e *Engine) moveCharacter(c character.ICharacter, direction move.Direction) {
+func (e *Engine) MoveCharacter(c character.ICharacter, direction move.Direction) {
 	pos := c.Position()
 	var newPos *board.Position
 	switch direction {
