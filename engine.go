@@ -4,15 +4,14 @@ import (
 	"errors"
 	"pacman/board"
 	"pacman/character/animated"
-	"pacman/character/inanimate"
+	"pacman/character/base"
 	"pacman/character/types"
 	"pacman/move"
 	"time"
 )
 
 type Engine struct {
-	items      []inanimate.IInanimate
-	characters []animated.IAnimated
+	characters []base.ICharacter
 	player     *animated.Player
 	board      *board.Board
 }
@@ -21,7 +20,7 @@ func NewEngine() *Engine {
 	return &Engine{}
 }
 
-func (e *Engine) CharacterByPosition(pos *board.Position) (animated.IAnimated, error) {
+func (e *Engine) CharacterByPosition(pos *board.Position) (base.ICharacter, error) {
 	if e.player.Position() == pos {
 		return e.player, nil
 	}
@@ -32,15 +31,6 @@ func (e *Engine) CharacterByPosition(pos *board.Position) (animated.IAnimated, e
 	}
 	return nil, errors.New("no character on given position")
 }
-
-// func (e *Engine) ItemByPosition(pos *board.Position) (item.IItem, error) {
-// 	for _, i := range e.items {
-// 		if i.Position().X == pos.X && i.Position().Y == pos.Y {
-// 			return i, nil
-// 		}
-// 	}
-// 	return nil, errors.New("no item on given position")
-// }
 
 func (e *Engine) MovePlayer() {
 	for {

@@ -10,24 +10,24 @@ import (
 	"fyne.io/fyne/v2/container"
 )
 
-type userInterface struct {
+type UserInterface struct {
 	window fyne.Window
 	grid   *fyne.Container
 	game   *Game
 }
 
-func NewUI(window fyne.Window) *userInterface {
-	ui := &userInterface{window: window}
+func NewUI(window fyne.Window) *UserInterface {
+	ui := &UserInterface{window: window}
 	return ui
 }
 
-func (ui *userInterface) createGrid() *fyne.Container {
+func (ui *UserInterface) createGrid() *fyne.Container {
 	cells := make([]fyne.CanvasObject, 0)
 
 	for y := 0; y < BoardSize; y++ {
 		for x := 0; x < BoardSize; x++ {
-			bg := canvas.NewRectangle(color.Gray{0x30})
 			img := canvas.NewImageFromResource(nil)
+			bg := canvas.NewRectangle(color.Gray{0x30})
 			img.FillMode = canvas.ImageFillContain
 			cell := container.NewMax(bg, img)
 			cells = append(cells, cell)
@@ -37,7 +37,7 @@ func (ui *userInterface) createGrid() *fyne.Container {
 	return container.New(&boardLayout{}, cells...)
 }
 
-func (ui *userInterface) RefreshGrid() {
+func (ui *UserInterface) RefreshGrid() {
 	for _, pos := range ui.game.engine.board.Positions() {
 		cell := pos.Cell()
 		img := cell.(*fyne.Container).Objects[1].(*canvas.Image)
@@ -49,19 +49,15 @@ func (ui *userInterface) RefreshGrid() {
 	}
 }
 
-func (ui *userInterface) positionImage(pos *board.Position) fyne.Resource {
+func (ui *UserInterface) positionImage(pos *board.Position) fyne.Resource {
 	char, err := ui.game.engine.CharacterByPosition(pos)
 	if err == nil {
 		return char.CharacterImage()
 	}
-	// item, err := ui.game.engine.ItemByPosition(pos)
-	// if err == nil {
-	// 	return item.ItemImage()
-	// }
 	return nil
 }
 
-func (ui *userInterface) CreateUI() fyne.CanvasObject {
+func (ui *UserInterface) CreateUI() fyne.CanvasObject {
 	ui.game.createBoard()
 	ui.grid = ui.createGrid()
 	ui.game.engine.board.SetPositionTypes()

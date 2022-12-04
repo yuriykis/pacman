@@ -1,19 +1,19 @@
 package inanimate
 
 import (
-	"pacman/character"
+	"pacman/character/base"
 	"pacman/character/types"
 )
 
 type IInanimate interface {
-	character.ICharacter
+	base.ICharacter
 }
 
 type inanimate struct {
-	character.Character
+	base.Character
 }
 
-func NewAnimatedCharacter(cType types.CharacterType) IInanimate {
+func NewInanimateCharacter(cType types.CharacterType) IInanimate {
 	var newChar IInanimate
 	switch cType {
 	case types.TCoin:

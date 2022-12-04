@@ -1,4 +1,4 @@
-package character
+package base
 
 import (
 	"pacman/board"
@@ -10,7 +10,7 @@ import (
 
 type ICharacter interface {
 	InitCharacter(pos *board.Position)
-	CharacterImage() *fyne.StaticResource
+	CharacterImage() fyne.Resource
 	CharacterType() types.CharacterType
 	Position() *board.Position
 	SetCharacterPosition(pos *board.Position)
@@ -18,12 +18,12 @@ type ICharacter interface {
 }
 
 type Character struct {
-	img   *fyne.StaticResource
+	img   fyne.Resource
 	cType types.CharacterType
 	pos   *board.Position
 }
 
-func (char *Character) CharacterImage() *fyne.StaticResource {
+func (char *Character) CharacterImage() fyne.Resource {
 	return char.img
 }
 
@@ -41,10 +41,7 @@ func (char *Character) SetCharacterType(cType types.CharacterType) {
 }
 
 func (char *Character) setCharacterImage() {
-	img, ok := utils.ResourceForCharacter(char.CharacterType()).(*fyne.StaticResource)
-	if ok {
-		char.img = img
-	}
+	char.img = utils.ResourceForCharacter(char.CharacterType())
 }
 
 func (char *Character) SetCharacterPosition(pos *board.Position) {

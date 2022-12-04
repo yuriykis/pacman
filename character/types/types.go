@@ -3,7 +3,7 @@ package types
 type CharacterType int8
 
 const (
-	TNoAnimatedType CharacterType = iota
+	TNoCharacterType CharacterType = iota
 	TPlayer
 	TGhostBlue
 	TGhostRed

@@ -1,18 +1,18 @@
 package animated
 
 import (
-	"pacman/character"
+	"pacman/character/base"
 	"pacman/character/types"
 	"pacman/move"
 )
 
 type IAnimated interface {
 	Move() move.Direction
-	character.ICharacter
+	base.ICharacter
 }
 
 type animated struct {
-	character.Character
+	base.Character
 }
 
 func NewAnimatedCharacter(cType types.CharacterType) IAnimated {
