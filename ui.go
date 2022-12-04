@@ -49,7 +49,7 @@ func (ui *userInterface) refreshGrid() {
 	}
 }
 
-func (ui *userInterface) positionImage(pos *board.Position) *fyne.StaticResource {
+func (ui *userInterface) positionImage(pos *board.Position) fyne.Resource {
 	char, err := ui.game.CharacterByPosition(pos)
 	if err == nil {
 		return char.CharacterImage()
