@@ -23,10 +23,16 @@ func main() {
 	ui.game = NewGame()
 	window.SetContent(ui.CreateUI())
 
-	ui.game.CreateGame()
+	err := ui.game.CreateGame()
+	if err != nil {
+		panic(err)
+	}
 	go func() {
 		for {
-			ui.RefreshGrid()
+			err := ui.RefreshGrid()
+			if err != nil {
+				panic(err)
+			}
 			time.Sleep(100 * time.Millisecond)
 		}
 	}()

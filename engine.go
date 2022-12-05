@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"pacman/board"
 	"pacman/character/animated"
 	"pacman/character/base"
@@ -33,10 +34,17 @@ func (e *Engine) CharacterByPosition(pos *board.Position) (base.ICharacter, erro
 }
 
 func (e *Engine) MovePlayer() {
+	defer handleMovePlayerPanic()
 	for {
 		direction := e.player.Move()
 		e.MoveCharacter(e.player, direction)
 		time.Sleep(time.Duration(GameSpeed) * time.Millisecond)
+	}
+}
+
+func handleMovePlayerPanic() {
+	if r := recover(); r != nil {
+		fmt.Println("error in move player func", r)
 	}
 }
 

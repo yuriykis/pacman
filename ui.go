@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"image/color"
 	"pacman/board"
 	"pacman/utils"
@@ -37,16 +38,20 @@ func (ui *UserInterface) createGrid() *fyne.Container {
 	return container.New(&boardLayout{}, cells...)
 }
 
-func (ui *UserInterface) RefreshGrid() {
+func (ui *UserInterface) RefreshGrid() error {
 	for _, pos := range ui.game.engine.board.Positions() {
 		cell := pos.Cell()
-		img := cell.(*fyne.Container).Objects[1].(*canvas.Image)
+		img, ok := cell.(*fyne.Container).Objects[1].(*canvas.Image)
+		if !ok {
+			return errors.New("could not cast cell to image")
+		}
 		img.Resource = ui.positionImage(pos)
 		if pos.PositionType() == board.Wall {
 			img.Resource = utils.ResourceForWall()
 		}
 		img.Refresh()
 	}
+	return nil
 }
 
 func (ui *UserInterface) positionImage(pos *board.Position) fyne.Resource {
