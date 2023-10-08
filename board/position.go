@@ -14,17 +14,30 @@ const (
 	Wall
 )
 
+type PositionData struct {
+	X    int
+	Y    int
+	Cell fyne.CanvasObject
+}
 type Position struct {
-	X      int
-	Y      int
+	PositionData
+
 	pType  PositionType
 	isFree bool
-	cell   fyne.CanvasObject
 	mu     sync.Mutex
 }
 
 func NewPosition(x int, y int, cell fyne.CanvasObject) *Position {
-	return &Position{X: x, Y: y, pType: Space, isFree: true, cell: cell}
+	pd := PositionData{
+		X:    x,
+		Y:    y,
+		Cell: cell,
+	}
+	return &Position{
+		PositionData: pd,
+		pType:        Space,
+		isFree:       true,
+	}
 }
 
 func (pos *Position) SetPositionType(pType PositionType) {
@@ -47,11 +60,11 @@ func (pos *Position) SetFree(isFree bool) {
 }
 
 func (pos *Position) SetCell(cell fyne.CanvasObject) {
-	pos.cell = cell
+	pos.Cell = cell
 }
 
-func (pos *Position) Cell() fyne.CanvasObject {
-	return pos.cell
+func (pos *Position) GetCell() fyne.CanvasObject {
+	return pos.Cell
 }
 
 func (pos *Position) Lock() {

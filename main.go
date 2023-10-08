@@ -1,10 +1,9 @@
 package main
 
 import (
-	"time"
-
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
+	log "github.com/sirupsen/logrus"
 )
 
 const (
@@ -17,30 +16,11 @@ const (
 
 func main() {
 	application := app.New()
-	window := application.NewWindow("Packman")
+	window := application.NewWindow("Pacman")
 	window.Resize(fyne.NewSize(WindowResolution, WindowResolution))
-	ui := NewUI(window)
-	ui.game = NewGame()
-	window.SetContent(ui.CreateUI())
+	game := NewGame(window)
 
-	err := ui.game.CreateGame()
-	if err != nil {
-		panic(err)
+	if err := game.Start(); err != nil {
+		log.Fatal(err)
 	}
-	go func() {
-		for {
-			err := ui.RefreshGrid()
-			if err != nil {
-				panic(err)
-			}
-			time.Sleep(100 * time.Millisecond)
-		}
-	}()
-	ui.game.StartGame()
-
-	window.Canvas().SetOnTypedKey(func(k *fyne.KeyEvent) {
-		ui.game.engine.player.MapKeyCodeToDirection(*k)
-	})
-
-	window.ShowAndRun()
 }

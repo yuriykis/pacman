@@ -18,29 +18,6 @@ const (
 	SpaceChar BoardPositionType = " "
 )
 
-var boardView = [][]BoardPositionType{
-	{WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar},
-	{WallChar, SpaceChar, WallChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar},
-	{WallChar, SpaceChar, WallChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar},
-	{WallChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar},
-	{WallChar, SpaceChar, WallChar, WallChar, WallChar, WallChar, SpaceChar, SpaceChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, SpaceChar, SpaceChar, WallChar, WallChar, WallChar},
-	{WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar},
-	{WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar},
-	{WallChar, SpaceChar, WallChar, WallChar, WallChar, WallChar, WallChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar},
-	{WallChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar},
-	{WallChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar},
-	{WallChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar},
-	{WallChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, WallChar, WallChar, WallChar, WallChar},
-	{WallChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, WallChar},
-	{WallChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, WallChar},
-	{WallChar, SpaceChar, WallChar, SpaceChar, WallChar, WallChar, WallChar, WallChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, WallChar},
-	{WallChar, SpaceChar, WallChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, WallChar},
-	{WallChar, SpaceChar, WallChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar},
-	{WallChar, SpaceChar, WallChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, WallChar},
-	{WallChar, SpaceChar, WallChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, SpaceChar, SpaceChar, WallChar, SpaceChar, WallChar},
-	{WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar, WallChar},
-}
-
 func NewBoard() *Board {
 	b := Board{}
 	b.initBoardView()
@@ -81,9 +58,10 @@ func (b *Board) FindFreePosition() *Position {
 	return nil
 }
 
-func (b *Board) CreatePosition(x int, y int, cell fyne.CanvasObject) {
+func (b *Board) CreatePosition(x int, y int, cell fyne.CanvasObject) PositionData {
 	pos := NewPosition(x, y, cell)
 	b.positions = append(b.positions, pos)
+	return pos.PositionData
 }
 
 func (b *Board) FindPosition(x int, y int) *Position {

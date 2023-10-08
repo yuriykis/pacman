@@ -1,19 +1,47 @@
 package character
 
-import (
-	"pacman/character/animated"
-	"pacman/character/base"
-	"pacman/character/inanimate"
-	"pacman/character/types"
-)
+func NewCharacter(cType CharacterType) BaseCharacter {
+	var (
+		mt = cType.MoverType
+		bc = &baseCharacter{CType: cType}
+	)
 
-func NewCharacter(cType types.CharacterType) base.ICharacter {
-	switch cType {
-	case types.TPlayer, types.TGhostBlue, types.TGhostOrange, types.TGhostRed, types.TGhostWhite:
-		return animated.NewAnimatedCharacter(cType)
-	case types.TCoin:
-		return inanimate.NewInanimateCharacter(cType)
-	default:
-		return nil
+	if mt != NoneMoverType {
+		switch mt {
+		case PlayerType:
+			return &Player{
+				BaseCharacter: bc,
+			}
+		case GhostBlueType:
+			return &GhostBlue{
+				BaseCharacter: bc,
+			}
+		case GhostOrangeType:
+			return &GhostOrange{
+				BaseCharacter: bc,
+			}
+		case GhostRedType:
+			return &GhostRed{
+				BaseCharacter: bc,
+			}
+		case GhostWhiteType:
+			return &GhostWhite{
+				BaseCharacter: bc,
+			}
+		default:
+			return nil
+		}
 	}
+	ct := cType.CollectibleType
+	if ct != NoneCollectibleType {
+		switch cType.CollectibleType {
+		case CoinType:
+			return &Coin{
+				BaseCharacter: bc,
+			}
+		default:
+			return nil
+		}
+	}
+	return nil
 }

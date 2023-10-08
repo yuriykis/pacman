@@ -4,25 +4,29 @@ import (
 	"errors"
 	"image/color"
 	"pacman/board"
-	"pacman/utils"
+	"pacman/character"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 )
 
-type UserInterface struct {
-	window fyne.Window
-	grid   *fyne.Container
-	game   *Game
+type UI struct {
+	window        fyne.Window
+	grid          *fyne.Container
+	PositionDatas []*board.PositionData
 }
 
-func NewUI(window fyne.Window) *UserInterface {
-	ui := &UserInterface{window: window}
+func NewUI(window fyne.Window) *UI {
+	ui := &UI{
+		window:        window,
+		PositionDatas: make([]*board.PositionData, 0),
+	}
+	ui.createUI()
 	return ui
 }
 
-func (ui *UserInterface) createGrid() *fyne.Container {
+func (ui *UI) createGrid() {
 	cells := make([]fyne.CanvasObject, 0)
 
 	for y := 0; y < BoardSize; y++ {
@@ -32,39 +36,33 @@ func (ui *UserInterface) createGrid() *fyne.Container {
 			img.FillMode = canvas.ImageFillContain
 			cell := container.NewMax(bg, img)
 			cells = append(cells, cell)
-			ui.game.engine.board.CreatePosition(x, y, cell)
+			ui.PositionDatas = append(ui.PositionDatas, &board.PositionData{
+				X:    x,
+				Y:    y,
+				Cell: cell,
+			})
 		}
 	}
-	return container.New(&boardLayout{}, cells...)
+	ui.grid = container.New(&boardLayout{}, cells...)
 }
 
-func (ui *UserInterface) RefreshGrid() error {
-	for _, pos := range ui.game.engine.board.Positions() {
-		cell := pos.Cell()
+func (ui *UI) RefreshGrid(poss []*board.Position, pImgs []fyne.Resource) error {
+	for i, pos := range poss {
+		cell := pos.GetCell()
 		img, ok := cell.(*fyne.Container).Objects[1].(*canvas.Image)
 		if !ok {
 			return errors.New("could not cast cell to image")
 		}
-		img.Resource = ui.positionImage(pos)
+		img.Resource = pImgs[i]
 		if pos.PositionType() == board.Wall {
-			img.Resource = utils.ResourceForWall()
+			img.Resource = character.ResourceForWall()
 		}
 		img.Refresh()
 	}
 	return nil
 }
 
-func (ui *UserInterface) positionImage(pos *board.Position) fyne.Resource {
-	char, err := ui.game.engine.CharacterByPosition(pos)
-	if err == nil {
-		return char.CharacterImage()
-	}
-	return nil
-}
-
-func (ui *UserInterface) CreateUI() fyne.CanvasObject {
-	ui.game.createBoard()
-	ui.grid = ui.createGrid()
-	ui.game.engine.board.SetPositionTypes()
-	return ui.grid
+func (ui *UI) createUI() {
+	ui.createGrid()
+	ui.window.SetContent(ui.grid)
 }

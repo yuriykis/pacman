@@ -1,26 +1,30 @@
 //go:generate fyne bundle -o bundled.go ../icons
 
-package utils
+package character
 
 import (
-	"pacman/character/types"
-
 	"fyne.io/fyne/v2"
 )
 
-func ResourceForCharacter(cType types.CharacterType) fyne.Resource {
+func ResourceForMover(cType MoverType) fyne.Resource {
 	switch cType {
-	case types.TPlayer:
+	case PlayerType:
 		return resourcePacmanSvg
-	case types.TGhostBlue:
+	case GhostBlueType:
 		return resourceGhostBlueSvg
-	case types.TGhostRed:
+	case GhostRedType:
 		return resourceGhostRedSvg
-	case types.TGhostWhite:
+	case GhostWhiteType:
 		return resourceGhostWhiteSvg
-	case types.TGhostOrange:
+	case GhostOrangeType:
 		return resourceGhostOrangeSvg
-	case types.TCoin:
+	}
+	return nil
+}
+
+func ResourceForCollectible(cType CollectibleType) fyne.Resource {
+	switch cType {
+	case CoinType:
 		return resourceCoinSvg
 	}
 	return nil

@@ -1,4 +1,4 @@
-package animated
+package character
 
 import (
 	"pacman/move"
@@ -7,7 +7,8 @@ import (
 )
 
 type Player struct {
-	animated
+	BaseCharacter
+
 	currentDirection move.Direction
 }
 
