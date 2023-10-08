@@ -30,18 +30,18 @@ func (b *Board) initBoardView() {
 
 func (b *Board) SetPositionTypes() {
 	for _, p := range b.positions {
-		if b.BoardPositionTypeByPosition(*p) == WallChar {
+		if b.BoardPositionTypeByPosition(*&p.PositionData) == WallChar {
 			p.SetPositionType(Wall)
 			continue
 		}
-		if b.BoardPositionTypeByPosition(*p) == SpaceChar {
+		if b.BoardPositionTypeByPosition(*&p.PositionData) == SpaceChar {
 			p.SetPositionType(Space)
 			continue
 		}
 	}
 }
 
-func (b *Board) BoardPositionTypeByPosition(pos Position) BoardPositionType {
+func (b *Board) BoardPositionTypeByPosition(pos PositionData) BoardPositionType {
 	return b.boardView[pos.X][pos.Y]
 }
 

@@ -82,7 +82,7 @@ func (g *Game) CreateBoardPositions() {
 	}
 }
 
-func (g *Game) Refresh() {
+func (g *Game) Update() {
 	poss := g.engine.board.Positions()
 	pImgs := make([]fyne.Resource, len(poss))
 	for i, pos := range poss {
@@ -106,7 +106,7 @@ func (g *Game) Start() error {
 
 	go func() {
 		for {
-			g.Refresh()
+			g.Update()
 			time.Sleep(100 * time.Millisecond)
 		}
 
