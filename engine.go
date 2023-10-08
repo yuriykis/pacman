@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"math/rand"
 	"pacman/board"
 	"pacman/character"
 	"pacman/move"
@@ -16,7 +17,45 @@ type Engine struct {
 }
 
 func NewEngine() *Engine {
-	return &Engine{}
+	return &Engine{
+		board: board.NewBoard(),
+	}
+}
+
+func (e *Engine) initPlayer() error {
+	pos := e.board.FindFreePosition()
+	char := character.NewCharacter(character.CharacterType{
+		MoverType:       character.PlayerType,
+		CollectibleType: character.NoneCollectibleType,
+	})
+	char.InitCharacter(pos)
+	player, ok := char.(*character.Player)
+	if !ok {
+		return errors.New("could not create player")
+	}
+	e.player = player
+	return nil
+}
+
+func (e *Engine) generateCharacters() {
+	for i := 0; i < CharactersNumber; i++ {
+		var (
+			char  character.BaseCharacter
+			cType = rand.Intn(5) + 2
+			pos   = e.board.FindFreePosition()
+		)
+		if cType < 5 {
+			char = character.NewCharacter(character.CharacterType{
+				MoverType: character.MoverType(cType),
+			})
+		} else {
+			char = character.NewCharacter(character.CharacterType{
+				CollectibleType: character.CoinType,
+			})
+		}
+		char.InitCharacter(pos)
+		e.characters = append(e.characters, char)
+	}
 }
 
 func (e *Engine) CharacterByPosition(

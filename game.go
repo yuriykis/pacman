@@ -1,10 +1,7 @@
 package main
 
 import (
-	"errors"
 	"fmt"
-	"math/rand"
-	"pacman/board"
 	"pacman/character"
 	"time"
 
@@ -21,59 +18,18 @@ func NewGame(window fyne.Window) *Game {
 		engine: NewEngine(),
 	}
 	g.ui = NewUI(window)
-	g.createBoard()
 	g.CreateBoardPositions()
 	g.engine.board.SetPositionTypes()
 	return g
 }
 
 func (g *Game) CreateGame() error {
-	err := g.initPlayer()
+	err := g.engine.initPlayer()
 	if err != nil {
 		return err
 	}
-	g.generateCharacters()
+	g.engine.generateCharacters()
 	return nil
-}
-
-func (g *Game) generateCharacters() {
-	for i := 0; i < CharactersNumber; i++ {
-		var (
-			char  character.BaseCharacter
-			cType = rand.Intn(5) + 2
-			pos   = g.engine.board.FindFreePosition()
-		)
-		if cType < 5 {
-			char = character.NewCharacter(character.CharacterType{
-				MoverType: character.MoverType(cType),
-			})
-		} else {
-			char = character.NewCharacter(character.CharacterType{
-				CollectibleType: character.CoinType,
-			})
-		}
-		char.InitCharacter(pos)
-		g.engine.characters = append(g.engine.characters, char)
-	}
-}
-
-func (g *Game) initPlayer() error {
-	pos := g.engine.board.FindFreePosition()
-	char := character.NewCharacter(character.CharacterType{
-		MoverType:       character.PlayerType,
-		CollectibleType: character.NoneCollectibleType,
-	})
-	char.InitCharacter(pos)
-	player, ok := char.(*character.Player)
-	if !ok {
-		return errors.New("could not create player")
-	}
-	g.engine.player = player
-	return nil
-}
-
-func (g *Game) createBoard() {
-	g.engine.board = board.NewBoard()
 }
 
 func (g *Game) CreateBoardPositions() {
