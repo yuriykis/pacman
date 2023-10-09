@@ -1,7 +1,7 @@
 package character
 
 import (
-	"pacman/move"
+	"github.com/yuriykis/pacman/move"
 )
 
 type MoverType int8

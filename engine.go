@@ -4,10 +4,11 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
-	"pacman/board"
-	"pacman/character"
-	"pacman/move"
 	"time"
+
+	"github.com/yuriykis/pacman/board"
+	"github.com/yuriykis/pacman/character"
+	"github.com/yuriykis/pacman/move"
 )
 
 type Engine struct {

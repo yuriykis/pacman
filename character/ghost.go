@@ -2,7 +2,8 @@ package character
 
 import (
 	"math/rand"
-	"pacman/move"
+
+	"github.com/yuriykis/pacman/move"
 )
 
 type GhostBlue struct {

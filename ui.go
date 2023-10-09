@@ -3,8 +3,9 @@ package main
 import (
 	"errors"
 	"image/color"
-	"pacman/board"
-	"pacman/character"
+
+	"github.com/yuriykis/pacman/board"
+	"github.com/yuriykis/pacman/character"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"

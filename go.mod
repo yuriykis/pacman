@@ -1,4 +1,4 @@
-module pacman
+module github.com/yuriykis/pacman
 
 go 1.19
 

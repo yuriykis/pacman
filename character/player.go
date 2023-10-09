@@ -1,7 +1,7 @@
 package character
 
 import (
-	"pacman/move"
+	"github.com/yuriykis/pacman/move"
 
 	"fyne.io/fyne/v2"
 )

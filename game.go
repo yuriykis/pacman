@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"pacman/character"
 	"time"
+
+	"github.com/yuriykis/pacman/character"
 
 	"fyne.io/fyne/v2"
 )
