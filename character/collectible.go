@@ -9,4 +9,5 @@ const (
 
 type Collectible interface {
 	Collect()
+	Value() int
 }

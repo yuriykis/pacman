@@ -34,8 +34,8 @@ func (char *baseCharacter) Type() CharacterType {
 	return char.CType
 }
 
-func (char *baseCharacter) SetType(cType CharacterType) {
-	char.CType = cType
+func (char *baseCharacter) SetType(mType CharacterType) {
+	char.CType = mType
 }
 
 func (char *baseCharacter) InitCharacter(pos *board.Position) {

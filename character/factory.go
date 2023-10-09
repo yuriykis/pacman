@@ -1,9 +1,11 @@
 package character
 
-func NewCharacter(cType CharacterType) BaseCharacter {
+import "math/rand"
+
+func NewCharacter(mType CharacterType) BaseCharacter {
 	var (
-		mt = cType.MoverType
-		bc = &baseCharacter{CType: cType}
+		mt = mType.MoverType
+		bc = &baseCharacter{CType: mType}
 	)
 
 	if mt != NoneMoverType {
@@ -11,33 +13,40 @@ func NewCharacter(cType CharacterType) BaseCharacter {
 		case PlayerType:
 			return &Player{
 				BaseCharacter: bc,
+				score:         0,
+				health:        PlayerHealth,
 			}
 		case GhostBlueType:
 			return &GhostBlue{
 				BaseCharacter: bc,
+				attacker:      attacker{aType: AttackerType(rand.Intn(2) + 1)},
 			}
 		case GhostOrangeType:
 			return &GhostOrange{
 				BaseCharacter: bc,
+				attacker:      attacker{aType: AttackerType(rand.Intn(2) + 1)},
 			}
 		case GhostRedType:
 			return &GhostRed{
 				BaseCharacter: bc,
+				attacker:      attacker{aType: AttackerType(rand.Intn(2) + 1)},
 			}
 		case GhostWhiteType:
 			return &GhostWhite{
 				BaseCharacter: bc,
+				attacker:      attacker{aType: AttackerType(rand.Intn(2) + 1)},
 			}
 		default:
 			return nil
 		}
 	}
-	ct := cType.CollectibleType
+	ct := mType.CollectibleType
 	if ct != NoneCollectibleType {
-		switch cType.CollectibleType {
+		switch mType.CollectibleType {
 		case CoinType:
 			return &Coin{
 				BaseCharacter: bc,
+				value:         1,
 			}
 		default:
 			return nil

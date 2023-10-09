@@ -6,8 +6,8 @@ import (
 	"fyne.io/fyne/v2"
 )
 
-func ResourceForMover(cType MoverType) fyne.Resource {
-	switch cType {
+func ResourceForMover(mType MoverType) fyne.Resource {
+	switch mType {
 	case PlayerType:
 		return resourcePacmanSvg
 	case GhostBlueType:
@@ -22,8 +22,8 @@ func ResourceForMover(cType MoverType) fyne.Resource {
 	return nil
 }
 
-func ResourceForCollectible(cType CollectibleType) fyne.Resource {
-	switch cType {
+func ResourceForCollectible(mType CollectibleType) fyne.Resource {
+	switch mType {
 	case CoinType:
 		return resourceCoinSvg
 	}

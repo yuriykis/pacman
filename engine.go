@@ -42,12 +42,12 @@ func (e *Engine) generateCharacters() {
 	for i := 0; i < CharactersNumber; i++ {
 		var (
 			char  character.BaseCharacter
-			cType = rand.Intn(5) + 2
+			mType = rand.Intn(5) + 2
 			pos   = e.board.FindFreePosition()
 		)
-		if cType < 5 {
+		if mType < 5 {
 			char = character.NewCharacter(character.CharacterType{
-				MoverType: character.MoverType(cType),
+				MoverType: character.MoverType(mType),
 			})
 		} else {
 			char = character.NewCharacter(character.CharacterType{
@@ -140,17 +140,25 @@ func (e *Engine) colision(
 	if newPos.PositionType() == board.Wall {
 		return
 	}
-	if myChar.Type().MoverType != character.NoneMoverType {
-		colisionCharacter, err := e.CharacterByPosition(newPos)
-		if err != nil {
-			return
-		}
-		if colisionCharacter.Type().CollectibleType != character.NoneCollectibleType {
-			//	e.player.AddScore(10)
-			e.moveToNewPosision(myChar, pos, newPos)
-			e.removeCharacter(colisionCharacter)
-			return
-		}
+
+	colisionCharacter, err := e.CharacterByPosition(newPos)
+	if err != nil {
 		return
+	}
+	if myChar.Type().MoverType != character.NoneMoverType {
+		if p, ok := myChar.(*character.Player); ok {
+			if colisionCharacter.Type().CollectibleType != character.NoneCollectibleType {
+				p.AddScore(colisionCharacter.(character.Collectible))
+				fmt.Println("score:", p.Score())
+				e.moveToNewPosision(myChar, pos, newPos)
+				e.removeCharacter(colisionCharacter)
+				return
+			}
+			if c, ok := colisionCharacter.(character.Attacker); ok {
+				h := c.Attack(p.Health())
+				fmt.Println("health:", h)
+				p.SetHealth(h)
+			}
+		}
 	}
 }

@@ -6,10 +6,16 @@ import (
 	"fyne.io/fyne/v2"
 )
 
+const (
+	PlayerHealth = 50
+)
+
 type Player struct {
 	BaseCharacter
 
 	currentDirection move.Direction
+	score            int
+	health           int
 }
 
 func (char *Player) Move() move.Direction {
@@ -31,4 +37,20 @@ func (char *Player) MapKeyCodeToDirection(k fyne.KeyEvent) {
 	case fyne.KeyLeft:
 		char.SetDirection(move.Left)
 	}
+}
+
+func (char *Player) Score() int {
+	return char.score
+}
+
+func (char *Player) AddScore(c Collectible) {
+	char.score += c.Value()
+}
+
+func (char *Player) Health() int {
+	return char.health
+}
+
+func (char *Player) SetHealth(h int) {
+	char.health = h
 }

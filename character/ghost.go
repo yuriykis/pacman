@@ -8,8 +8,8 @@ import (
 
 type GhostBlue struct {
 	BaseCharacter
-
-	cType MoverType
+	attacker
+	mType MoverType
 }
 
 func (char *GhostBlue) Move() move.Direction {
@@ -18,8 +18,8 @@ func (char *GhostBlue) Move() move.Direction {
 
 type GhostOrange struct {
 	BaseCharacter
-
-	cType MoverType
+	attacker
+	mType MoverType
 }
 
 func (char *GhostOrange) Move() move.Direction {
@@ -28,8 +28,8 @@ func (char *GhostOrange) Move() move.Direction {
 
 type GhostRed struct {
 	BaseCharacter
-
-	cType MoverType
+	attacker
+	mType MoverType
 }
 
 func (char *GhostRed) Move() move.Direction {
@@ -38,8 +38,8 @@ func (char *GhostRed) Move() move.Direction {
 
 type GhostWhite struct {
 	BaseCharacter
-
-	cType MoverType
+	attacker
+	mType MoverType
 }
 
 func (char *GhostWhite) Move() move.Direction {
