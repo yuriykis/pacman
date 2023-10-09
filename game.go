@@ -18,8 +18,7 @@ func NewGame(window fyne.Window) *Game {
 		engine: NewEngine(),
 	}
 	g.ui = NewUI(window)
-	g.CreateBoardPositions()
-	g.engine.board.SetPositionTypes()
+	g.createBoardPositions()
 	return g
 }
 
@@ -30,28 +29,6 @@ func (g *Game) CreateGame() error {
 	}
 	g.engine.generateCharacters()
 	return nil
-}
-
-func (g *Game) CreateBoardPositions() {
-	for _, pd := range g.ui.PositionDatas {
-		g.engine.board.CreatePosition(pd.X, pd.Y, pd.Cell)
-	}
-}
-
-func (g *Game) Update() {
-	poss := g.engine.board.Positions()
-	pImgs := make([]fyne.Resource, len(poss))
-	for i, pos := range poss {
-		c, err := g.engine.CharacterByPosition(pos)
-		if err == nil {
-			pImgs[i] = c.CharacterImage()
-			continue
-		}
-	}
-	err := g.ui.RefreshGrid(poss, pImgs)
-	if err != nil {
-		panic(err)
-	}
 }
 
 func (g *Game) Start() error {
@@ -80,6 +57,29 @@ func (g *Game) Start() error {
 	})
 	g.ui.window.ShowAndRun()
 	return nil
+}
+
+func (g *Game) Update() {
+	poss := g.engine.board.Positions()
+	pImgs := make([]fyne.Resource, len(poss))
+	for i, pos := range poss {
+		c, err := g.engine.CharacterByPosition(pos)
+		if err == nil {
+			pImgs[i] = c.CharacterImage()
+			continue
+		}
+	}
+	err := g.ui.RefreshGrid(poss, pImgs)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func (g *Game) createBoardPositions() {
+	for _, pd := range g.ui.PositionDatas {
+		g.engine.board.CreatePosition(pd.X, pd.Y, pd.Cell)
+	}
+	g.engine.board.SetPositionTypes()
 }
 
 func (g *Game) startMoving(c character.Mover) {

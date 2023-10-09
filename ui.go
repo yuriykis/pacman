@@ -20,27 +20,29 @@ type UI struct {
 func NewUI(window fyne.Window) *UI {
 	ui := &UI{
 		window:        window,
-		PositionDatas: make([]*board.PositionData, 0),
+		PositionDatas: make([]*board.PositionData, BoardSize*BoardSize),
 	}
 	ui.createUI()
 	return ui
 }
 
 func (ui *UI) createGrid() {
-	cells := make([]fyne.CanvasObject, 0)
+	cells := make([]fyne.CanvasObject, BoardSize*BoardSize)
 
+	it := 0
 	for y := 0; y < BoardSize; y++ {
 		for x := 0; x < BoardSize; x++ {
 			img := canvas.NewImageFromResource(nil)
 			bg := canvas.NewRectangle(color.Gray{0x30})
 			img.FillMode = canvas.ImageFillContain
 			cell := container.NewMax(bg, img)
-			cells = append(cells, cell)
-			ui.PositionDatas = append(ui.PositionDatas, &board.PositionData{
+			cells[it] = cell
+			ui.PositionDatas[it] = &board.PositionData{
 				X:    x,
 				Y:    y,
 				Cell: cell,
-			})
+			}
+			it++
 		}
 	}
 	ui.grid = container.New(&boardLayout{}, cells...)
@@ -51,7 +53,7 @@ func (ui *UI) RefreshGrid(poss []*board.Position, pImgs []fyne.Resource) error {
 		cell := pos.GetCell()
 		img, ok := cell.(*fyne.Container).Objects[1].(*canvas.Image)
 		if !ok {
-			return errors.New("could not cast cell to image")
+			return errors.New("error refreshing grid: could not cast cell to imag")
 		}
 		img.Resource = pImgs[i]
 		if pos.PositionType() == board.Wall {
