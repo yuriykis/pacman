@@ -73,12 +73,19 @@ func (e *Engine) CharacterByPosition(
 	return nil, errors.New("no character on given position")
 }
 
-func (e *Engine) MovePlayer() {
+func (e *Engine) MovePlayer(quit *Quit) {
 	defer handleMovePlayerPanic()
 	for {
-		direction := e.player.Move()
-		e.MoveCharacter(e.player, direction)
-		time.Sleep(time.Duration(GameSpeed) * time.Millisecond)
+		select {
+		case <-quit.ctx.Done():
+			return
+		default:
+			{
+				direction := e.player.Move()
+				e.MoveCharacter(quit, e.player, direction)
+				time.Sleep(time.Duration(GameSpeed) * time.Millisecond)
+			}
+		}
 	}
 }
 
@@ -88,7 +95,11 @@ func handleMovePlayerPanic() {
 	}
 }
 
-func (e *Engine) MoveCharacter(c character.BaseCharacter, direction move.Direction) {
+func (e *Engine) MoveCharacter(
+	q *Quit,
+	c character.BaseCharacter,
+	direction move.Direction,
+) {
 	pos := c.Position()
 	var newPos *board.Position
 	switch direction {
@@ -107,7 +118,7 @@ func (e *Engine) MoveCharacter(c character.BaseCharacter, direction move.Directi
 	if newPos.IsFree() {
 		e.moveToNewPosision(c, pos, newPos)
 	} else {
-		e.colision(c, pos, newPos)
+		e.colision(q, c, pos, newPos)
 	}
 	newPos.Unlock()
 }
@@ -133,6 +144,7 @@ func (e *Engine) removeCharacter(c character.BaseCharacter) {
 }
 
 func (e *Engine) colision(
+	q *Quit,
 	myChar character.BaseCharacter,
 	pos *board.Position,
 	newPos *board.Position,
@@ -157,6 +169,10 @@ func (e *Engine) colision(
 			if c, ok := colisionCharacter.(character.Attacker); ok {
 				h := c.Attack(p.Health())
 				fmt.Println("health:", h)
+				if h <= 0 {
+					q.Quit()
+					return
+				}
 				p.SetHealth(h)
 			}
 		}

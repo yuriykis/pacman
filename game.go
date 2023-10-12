@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"time"
 
@@ -8,6 +9,27 @@ import (
 
 	"fyne.io/fyne/v2"
 )
+
+type Quit struct {
+	ctx    context.Context
+	cancel context.CancelFunc
+}
+
+func NewQuit() *Quit {
+	ctx, cancel := context.WithCancel(context.Background())
+	return &Quit{
+		ctx:    ctx,
+		cancel: cancel,
+	}
+}
+
+func (q *Quit) Quit() {
+	q.cancel()
+}
+
+func (q *Quit) Done() <-chan struct{} {
+	return q.ctx.Done()
+}
 
 type Game struct {
 	engine *Engine
@@ -37,22 +59,28 @@ func (g *Game) Start() error {
 	if err != nil {
 		return err
 	}
-
-	go func() {
+	q := NewQuit()
+	go func(q *Quit) {
 		for {
-			g.Update()
-			time.Sleep(100 * time.Millisecond)
+			select {
+			case <-q.Done():
+				g.ui.ShowDialog("Game over")
+				return
+			default:
+				{
+					g.Update()
+					time.Sleep(100 * time.Millisecond)
+				}
+			}
 		}
-
-	}()
-
+	}(q)
 	for _, c := range g.engine.characters {
 		char, ok := c.(character.Mover)
 		if ok {
-			go g.startMoving(char)
+			go g.startMoving(q, char)
 		}
 	}
-	go g.engine.MovePlayer()
+	go g.engine.MovePlayer(q)
 	g.ui.window.Canvas().SetOnTypedKey(func(k *fyne.KeyEvent) {
 		g.engine.player.MapKeyCodeToDirection(*k)
 	})
@@ -83,12 +111,19 @@ func (g *Game) createBoardPositions() {
 	g.engine.board.SetPositionTypes()
 }
 
-func (g *Game) startMoving(c character.Mover) {
+func (g *Game) startMoving(q *Quit, c character.Mover) {
 	defer handleStartMovingPanic()
 	for {
-		direction := c.Move()
-		g.engine.MoveCharacter(c.(character.BaseCharacter), direction)
-		time.Sleep(time.Duration(GameSpeed) * time.Millisecond)
+		select {
+		case <-q.Done():
+			return
+		default:
+			{
+				direction := c.Move()
+				g.engine.MoveCharacter(q, c.(character.BaseCharacter), direction)
+				time.Sleep(time.Duration(GameSpeed) * time.Millisecond)
+			}
+		}
 	}
 }
 

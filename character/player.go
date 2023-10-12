@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	PlayerHealth = 50
+	PlayerHealth = 2
 )
 
 type Player struct {

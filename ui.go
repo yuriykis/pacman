@@ -10,6 +10,7 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/dialog"
 )
 
 type UI struct {
@@ -36,7 +37,7 @@ func (ui *UI) createGrid() {
 			img := canvas.NewImageFromResource(nil)
 			bg := canvas.NewRectangle(color.Gray{0x30})
 			img.FillMode = canvas.ImageFillContain
-			cell := container.NewMax(bg, img)
+			cell := container.NewStack(bg, img)
 			cells[it] = cell
 			ui.PositionDatas[it] = &board.PositionData{
 				X:    x,
@@ -49,12 +50,20 @@ func (ui *UI) createGrid() {
 	ui.grid = container.New(&boardLayout{}, cells...)
 }
 
-func (ui *UI) RefreshGrid(poss []*board.Position, pImgs []fyne.Resource) error {
+func (ui *UI) RefreshGrid(
+	poss []*board.Position,
+	pImgs []fyne.Resource,
+) error {
 	for i, pos := range poss {
 		cell := pos.GetCell()
 		img, ok := cell.(*fyne.Container).Objects[1].(*canvas.Image)
 		if !ok {
-			return errors.New("error refreshing grid: could not cast cell to imag")
+			return errors.New(
+				"error refreshing grid: could not cast cell to image",
+			)
+		}
+		if pImgs[i] == nil {
+			img.Image = nil
 		}
 		img.Resource = pImgs[i]
 		if pos.PositionType() == board.Wall {
@@ -68,4 +77,16 @@ func (ui *UI) RefreshGrid(poss []*board.Position, pImgs []fyne.Resource) error {
 func (ui *UI) createUI() {
 	ui.createGrid()
 	ui.window.SetContent(ui.grid)
+}
+
+func (ui *UI) ShowDialog(message string) {
+	dialog := dialog.NewInformation(
+		"Pacman",
+		message,
+		ui.window,
+	)
+	dialog.Show()
+	dialog.SetOnClosed(func() {
+		ui.window.Close()
+	})
 }
